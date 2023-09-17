@@ -17,7 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::query()->orderBy('id', 'desc')->paginate(10));
+        return User::all();
+        
     }
 
     /**
@@ -70,10 +71,15 @@ class UserController extends Controller
      * @param \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
         $user->delete();
-
-        return response("", 204);
+        
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }

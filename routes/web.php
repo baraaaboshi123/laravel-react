@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\CompanyController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::delete('/u/{id}', [UserController::class,'destroy'])->name('users.destroy');
+Route::any('/proxy/{url}', [ProxyController::class,'handle'])->where('url', '.*');
+Route::get('/u',[UserController::class,'index']);
+
+Route::get('/companies', [CompanyController::class,'index']);
+Route::get('/addCompany',[CompanyController::class,'store'])->name('companies.add');
+
