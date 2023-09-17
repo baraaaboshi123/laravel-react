@@ -7,6 +7,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -27,13 +28,24 @@ class UserController extends Controller
      * @param \App\Http\Requests\StoreUserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
-    {
-        $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
+    public function store(Request $request){
 
-        return response(new UserResource($user) , 201);
+        try {
+            $data=$request->json()->all();
+        $user = User::create([
+            'full_name' => $data['userName'],
+            'email' => $data['userEmail'],
+            'mobile_number' =>$data['userMobile'],
+            'address_city' =>$data['userCity'],
+            'address_region' =>$data['userRegion'],
+            'password' =>$data['userPassword'],
+        ]);
+
+        return response()->json(['message'=>'user added successfully']) ;  
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     /**

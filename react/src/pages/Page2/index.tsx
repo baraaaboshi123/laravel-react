@@ -52,7 +52,6 @@ function Main() {
     useEffect(() => {
         fetchCompanies();
     }, []);
-    let num: number = parseInt("-1");
     const fetchCompanies = () => {
         axios
             .get("http://127.0.0.1:8000/companies")
@@ -66,8 +65,7 @@ function Main() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        // Send the data to your server
+        console.log(csrfToken);
         try {
             const response = await axios.post('http://127.0.0.1:8000/addCompany', {
                 companyName: companyName,
@@ -77,13 +75,15 @@ function Main() {
                 companyRegion: companyRegion,
               }, {
                 headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRF-TOKEN': csrfToken,
+                    //'X-CSRF-TOKEN': csrfToken,
+                    'Content-Type': 'application/json',
                 },
+                
               });
-            
-              console.log(response);
-            
+              //console.log(response);
+              setShowAlert(true);
+              closeModal()
+
               // Optionally, show a success message or redirect to another page.
             } catch (error) {
               console.error('Error:', error);
@@ -104,6 +104,7 @@ function Main() {
                 <Modal isOpen={isModalOpen} onClose={closeModal}>
                     <h2 className="text-xl font-bold mb-4">Add New Company</h2>
                     <form onSubmit={handleSubmit}>
+                        
                         <div className="grid grid-cols-2  gap-2">
                             <FormLabel htmlFor="companyName">Company Name</FormLabel>
                             <FormInput
@@ -252,6 +253,15 @@ function Main() {
                     dismissible
                 >
                     user deleted successfully
+                </Alert>
+            )}
+            {showAlert && (
+                <Alert
+                    className="fixed bottom-0 left-0"
+                    variant="success"
+                    dismissible
+                >
+                    company added successfully
                 </Alert>
             )}
         </>

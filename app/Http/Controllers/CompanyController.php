@@ -14,7 +14,8 @@ class CompanyController extends Controller
 
     public function store(Request $request){
 
-        $data=$request->json()->all();
+        try {
+            $data=$request->json()->all();
         $company = Company::create([
             'name' => $data['companyName'],
             'email' => $data['companyEmail'],
@@ -23,8 +24,10 @@ class CompanyController extends Controller
             'address_region' =>$data['companyRegion'],
         ]);
 
-        return response()->json(['message'=>'company added successfully']) ->header('Access-Control-Allow-Origin', '*')
-        ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-
+        return response()->json(['message'=>'company added successfully']) ;  
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 }

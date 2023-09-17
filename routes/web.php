@@ -25,7 +25,10 @@ Route::get('/', function () {
 Route::delete('/u/{id}', [UserController::class,'destroy'])->name('users.destroy');
 Route::any('/proxy/{url}', [ProxyController::class,'handle'])->where('url', '.*');
 Route::get('/u',[UserController::class,'index']);
+Route::post('/addUser',[UserController::class,'store'])->middleware('web')->name('user.add');
+
+
 
 Route::get('/companies', [CompanyController::class,'index']);
-Route::get('/addCompany',[CompanyController::class,'store'])->name('companies.add');
+Route::post('/addCompany',[CompanyController::class,'store'])->middleware('web')->name('companies.add');
 

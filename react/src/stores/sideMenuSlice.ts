@@ -26,6 +26,16 @@ const initialState: SideMenuState = {
       pathname: "/page-2",
       title: "Companies",
     },
+    {
+      icon: "Activity",
+      pathname: "/shares",
+      title : "Shares",
+    },
+    {
+      icon: "Activity",
+      pathname: "/circles",
+      title: "Circles"
+    },
   ],
 };
 

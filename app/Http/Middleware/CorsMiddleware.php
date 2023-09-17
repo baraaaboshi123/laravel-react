@@ -19,7 +19,8 @@ class CorsMiddleware
         $response = $next($request);
         $response->header('Access-Control-Allow-Origin', '*');
         $response->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, application/json, Accept, Authorization, X-Requested-With, Application, x-csrf-token');
+        $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Authorization, X-Requested-With, Application, x-csrf-token');
+        $request->header('Accept', 'application/json');
         return $response;
     }
 }

@@ -197,6 +197,7 @@ const Alert = forwardRef(
                 },
               })
             : props.children}
+            <h2>{props.cont}</h2>
         </Component>
       </Transition>
     );

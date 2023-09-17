@@ -4,6 +4,8 @@ import SimpleMenu from "../layouts/SimpleMenu";
 import TopMenu from "../layouts/TopMenu";
 import Page1 from "../pages/Page1";
 import Page2 from "../pages/Page2";
+import Shares from "../pages/Shares"
+import Circles from "../pages/Circles"
 
 function Router() {
   const routes = [
@@ -18,6 +20,14 @@ function Router() {
         {
           path: "page-2",
           element: <Page2 />,
+        },
+        {
+          path: "shares",
+          element: <Shares/>
+        },
+        {
+          path: "circles",
+          element: <Circles/>
         },
       ],
     },
